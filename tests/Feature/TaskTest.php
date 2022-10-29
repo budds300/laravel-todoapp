@@ -18,6 +18,9 @@ class TaskTest extends TestCase
         $response = $this->getJson('api/tasks');
         $response->decodeResponseJson();
 
+        // log
+        $response->dump();
+
         $response->assertStatus(200);
     }
 
@@ -33,7 +36,7 @@ class TaskTest extends TestCase
         $response = $this->postJson('api/tasks', $task);
 
         // log
-        // $response->dd();
+        $response->dd();
 
         // assert
         $response->assertOk(200);
@@ -41,7 +44,7 @@ class TaskTest extends TestCase
 
     public function test_show()
     {
-        $response = $this->getJson('api/tasks/3');
+        $response = $this->getJson('api/tasks/4');
         $response->dd();
 
         $response->assertStatus(200)
@@ -56,10 +59,10 @@ class TaskTest extends TestCase
         Sanctum::actingAs(auth()->user());
 
         // put
-        $response = $this->putJson('api/tasks/5', ['text' => $this->faker->text(20), 'day' => $this->faker->date, 'reminder' => $this->faker->numberBetween(0, 1)]);
+        $response = $this->putJson('api/tasks/4', ['text' => $this->faker->text(20), 'day' => $this->faker->date, 'reminder' => $this->faker->numberBetween(0, 1)]);
 
         // log
-        // $response->dd();
+        $response->dump();
 
         //assert
         $response->assertStatus(200);
@@ -73,10 +76,10 @@ class TaskTest extends TestCase
         Sanctum::actingAs(auth()->user());
 
         // delete
-        $response = $this->deleteJson('api/tasks/3');
+        $response = $this->deleteJson('api/tasks/5');
 
         // log
-        // $response->dd();
+        $response->dd();
 
         // assert
         $response->assertStatus(200);
