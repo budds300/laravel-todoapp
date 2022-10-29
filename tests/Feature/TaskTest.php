@@ -59,7 +59,7 @@ class TaskTest extends TestCase
         Sanctum::actingAs(auth()->user());
 
         // put
-        $response = $this->putJson('api/tasks/4', ['text' => $this->faker->text(20), 'day' => $this->faker->date, 'reminder' => $this->faker->numberBetween(0, 1)]);
+        $response = $this->putJson('api/tasks/1', ['text' => $this->faker->text(20), 'day' => $this->faker->date, 'reminder' => $this->faker->numberBetween(0, 1)]);
 
         // log
         $response->dump();
