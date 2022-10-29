@@ -15,7 +15,7 @@ trait ApiResponse
     protected function success($data, string $message = null, int $code = 200)
     {
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => $message,
             'data' => $data
         ], $code);
