@@ -33,12 +33,19 @@ class AuthController extends Controller
             return $this->error('Credentials not match', 401);
         }
         $request->session()->regenerate();
+        return $this->success(auth()->user(), 'Login successful.');
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        try {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return $this->success([], 'Successfully logged out.');
+        } catch (Exception $e) {
+            return $this->error($e->getMessage(), 500);
+        }
     }
 }
