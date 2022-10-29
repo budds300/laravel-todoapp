@@ -93,7 +93,11 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, Task $task)
     {
         try {
-            $updated = $task->update($request->all());
+            $updated = tap($task, function($task) use($request){
+                $task->text =$request->input('text');
+                $task->day =$request->input('day');
+                $task->save();
+            });
             return $this->success($updated, 'Task updated successfully.');
         } catch (Exception $e) {
             return $this->error('An error occurred. Try again later.', 500);
