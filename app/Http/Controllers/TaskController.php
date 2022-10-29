@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
+use App\Traits\ApiResponse;
 use Exception;
 
 class TaskController extends Controller
 {
+
+    use ApiResponse;
 
     public function __construct()
     {
@@ -23,9 +26,9 @@ class TaskController extends Controller
     public function index()
     {
         try {
-            return response()->json(['message' => 'success', 'data' => Task::all()]);
+            return $this->success(Task::all(), 'All tasks.');
         } catch (Exception $e) {
-            return response()->json('An error occurred. Try again later.', 500);
+            return $this->error('An error occurred. Try again later.', 500);
         }
     }
 
@@ -48,11 +51,9 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request)
     {
         try {
-            $task = array_merge(['user_id' => auth()->user()->id], $request->all());
-
-            return response()->json(['message' => 'success', 'data' => Task::create($task)]);
+            return $this->success(auth()->user()->tasks()->create($request->all()), 'Task created successfully.');
         } catch (Exception $e) {
-            return response()->json('An error occurred. Try again later.', 500);
+            return $this->error('An error occurred. Try again later.', 500);
         }
     }
 
@@ -65,9 +66,9 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         try {
-            return response()->json(['message' => 'success', 'data' => $task]);
+            return $this->success($task, 'Task details.');
         } catch (Exception $e) {
-            return response()->json('An error occurred. Try again later.', 500);
+            return $this->error('An error occurred. Try again later.', 500);
         }
     }
 
@@ -92,10 +93,10 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, Task $task)
     {
         try {
-            $task->update($request->all());
-            return response()->json(['message' => 'updated']);
+            $updated = $task->update($request->all());
+            return $this->success($updated, 'Task updated successfully.');
         } catch (Exception $e) {
-            return response()->json('An error occurred. Try again later.', 500);
+            return $this->error('An error occurred. Try again later.', 500);
         }
     }
 
@@ -109,9 +110,9 @@ class TaskController extends Controller
     {
         try {
             $task->delete();
-            return response()->json(['message' => 'deleted']);
+            return $this->success([], 'Task deleted successfully.');
         } catch (Exception $e) {
-            return response()->json('An error occurred. Try again later.', 500);
+            return $this->error('An error occurred. Try again later.', 500);
         }
     }
 }
