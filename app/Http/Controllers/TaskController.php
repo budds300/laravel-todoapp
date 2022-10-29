@@ -48,7 +48,9 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request)
     {
         try {
-            return response()->json(['message' => 'success', 'data' => Task::create($request->all())]);
+            $task = array_merge(['user_id' => auth()->user()->id], $request->all());
+
+            return response()->json(['message' => 'success', 'data' => Task::create($task)]);
         } catch (Exception $e) {
             return response()->json('An error occurred. Try again later.', 500);
         }
