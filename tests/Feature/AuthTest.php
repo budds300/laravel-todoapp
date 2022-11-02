@@ -12,7 +12,7 @@ class AuthTest extends TestCase
 {
     use WithFaker;
 
-    public function test_register()
+    public function test_register_success()
     {
         // user details
         $password = '123456';
@@ -64,7 +64,7 @@ class AuthTest extends TestCase
     public function test_login_success()
     {
         // user details
-        $user = ['email' => 'bayer.jerald@hotmail.com', 'password' => '123456'];
+        $user = ['email' => 'joannie.reinger@adams.org', 'password' => '123456'];
 
         // post
         $response = $this->postJson('api/auth/login', $user);
