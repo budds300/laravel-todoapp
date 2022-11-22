@@ -49,7 +49,7 @@ class AuthTest extends TestCase
     public function test_login_error()
     {
         // user details
-        $user = ['email' => 'hpurdy@gmail.com', 'password' => '1234566'];
+        $user = ['email' => 'hpurdy@gmail.com', 'password' => '123456'];
 
         // post
         $response = $this->postJson('api/auth/login', $user);
@@ -64,7 +64,7 @@ class AuthTest extends TestCase
     public function test_login_success()
     {
         // user details
-        $user = ['email' => 'joannie.reinger@adams.org', 'password' => '123456'];
+        $user = ['email' => 'hettinger.layla@rempel.com', 'password' => '123456'];
 
         // post
         $response = $this->postJson('api/auth/login', $user);
@@ -80,7 +80,7 @@ class AuthTest extends TestCase
     public function test_user()
     {
         // Authentication
-        $user = ['email' => 'bayer.jerald@hotmail.com', 'password' => '123456'];
+        $user = ['email' => 'hettinger.layla@rempel.com', 'password' => '123456'];
         $this->postJson('api/auth/login', $user);
         Sanctum::actingAs(auth()->user());
 
@@ -97,7 +97,7 @@ class AuthTest extends TestCase
     public function test_logout()
     {
         // Authentication
-        $user = ['email' => 'bayer.jerald@hotmail.com', 'password' => '123456'];
+        $user = ['email' => 'tamminga@gmail.com', 'password' => 'password'];
         $this->postJson('api/auth/login', $user);
         Sanctum::actingAs(auth()->user());
 
